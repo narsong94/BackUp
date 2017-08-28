@@ -12,42 +12,17 @@
 </head>
 <body>
 
-<!-- header 잘라냄  -->
+<!-- 헤더부분 잘라냄  -->
+<jsp:include page="../../inc/header.jsp"/>
 
-	<div id="visual">
-		<div class="content-container"></div>
-	</div>
-
+<!-- visual 잘라냄  -->
+<jsp:include page="../inc/visual.jsp"/>
 
 	<div id="body" class="clearfix">
 		<div class="content-container">
 
-			<aside id="aside">
-
-				<!-- <h1>고객센터</h1>
-         
-         <nav>
-            <h1>고객센터 메뉴</h1>
-            <ul>
-               <li><a href="">공지사항</a></li>
-               <li><a href="">1:1고객문의</li>
-               <li><a href="">학습안내</li>
-            </ul>
-         </nav>
-      
-         <nav>
-            <h1>추천사이트</h1>
-            <ul>
-               <li>앤서이즈</li>
-               <li>W3C</li>
-               <li>마이크로소프트</li>
-            </ul>
-         </nav>
-         
-         <nav>
-            <h1>구글광고</h1>
-         </nav> -->
-			</aside>
+			<!-- aside 잘라냄 -->
+			<jsp:include page="../inc/aside.jsp"/>
 
 			<main id="main">
 			<h2>공지사항</h2>
@@ -61,18 +36,36 @@
 				</ol>
 			</div>
 
-			detail
-			
+			<div>
+				<h3>공지사항 검색 폼</h3>
+				<form action="notice-list" method="get">
+					<label>검색어</label> <input type="text" name="title" /> <input
+						type="submit" />
+				</form>
+			</div>
+			<table border="1">
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회수</th>
+				</tr>
+					<tr>
+						<td>${ detail.id }</td>
+						<td>${ detail.title }</a></td>
+						<td>newlec</td>
+						<td>${ detail.regDate }</td>
+						<td>${ detail.hit }</td>
+					</tr>
+			</table>
+			<span class="btn btn-default" href="">글쓰기</span> 
+			<a class="btn btn-img btn-cancel" href="">취소</a> 
 			</main>
 		</div>
 	</div>
-	<footer id="footer">
-		<div class="content-container"></div>
-	</footer>
-
-	<div id="floating">
-		플로팅 박스
-		<div></div>
-	</div>
+	
+<!-- footer 잘라냄 -->
+<jsp:include page="../../inc/footer.jsp"/>
 </body>
 </html>

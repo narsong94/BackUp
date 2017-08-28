@@ -92,13 +92,15 @@ body{
 
 	.hr-list ul{
 		overflow: auto;
+		display: flex;
 	}
 	
-	.hr-list li{
-		float: left;
+/* 	.hr-list li{
+		 float: left; 
 	}
-		
-	.hr-list li:first-child{
+	 */
+	 	
+	.hr-list.pad li:first-child{	/* 문서에는 class hr-list pad로 되어 있어야 적어야함  */
 		padding-left: 0px;
 		background: none;
 	}
@@ -158,6 +160,21 @@ body{
 	left: 468px;
 	top: 21px;
 }
+	
+	#search-form form{
+		display: flex;
+	}
+	
+	#search-form label{
+		/* line-height: 25px; */
+		align-self: center;
+		padding: 0px 5px;
+	}
+
+	#search-form input[type="text"]{
+		flex-grow: 1;
+		border: 0px;
+	}
 
 #member-menu{
 	right: 0px;

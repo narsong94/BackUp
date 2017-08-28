@@ -15,40 +15,14 @@
 <!-- 헤더부분 잘라냄  -->
 <jsp:include page="../../inc/header.jsp"/>
 
-	<div id="visual">
-		<div class="content-container"></div>
-	</div>
-
+<!-- visual 잘라냄  -->
+<jsp:include page="../inc/visual.jsp"/>
 
 	<div id="body" class="clearfix">
 		<div class="content-container">
 
-			<aside id="aside">
-
-				<!-- <h1>고객센터</h1>
-         
-         <nav>
-            <h1>고객센터 메뉴</h1>
-            <ul>
-               <li><a href="">공지사항</a></li>
-               <li><a href="">1:1고객문의</li>
-               <li><a href="">학습안내</li>
-            </ul>
-         </nav>
-      
-         <nav>
-            <h1>추천사이트</h1>
-            <ul>
-               <li>앤서이즈</li>
-               <li>W3C</li>
-               <li>마이크로소프트</li>
-            </ul>
-         </nav>
-         
-         <nav>
-            <h1>구글광고</h1>
-         </nav> -->
-			</aside>
+			<!-- aside 잘라냄 -->
+			<jsp:include page="../inc/aside.jsp"/>
 
 			<main id="main">
 			<h2>공지사항</h2>
@@ -64,7 +38,7 @@
 
 			<div>
 				<h3>공지사항 검색 폼</h3>
-				<form action="notice" method="get">
+				<form action="notice-list" method="get">
 					<label>검색어</label> <input type="text" name="title" /> <input
 						type="submit" />
 				</form>
@@ -79,8 +53,8 @@
 				</tr>
 				<c:forEach var="n" items="${list}">
 					<tr>
-						<td>${ n.id }-${ sessionScope.x }</td>
-						<td><a href="notice-detail">${ n.title }</a></td>
+						<td>${ n.id }</td>
+						<td><a href="notice-detail?id=${ n.id }">${ n.title }</a></td>
 						<td>newlec</td>
 						<td>${ n.regDate }</td>
 						<td>${ n.hit }</td>
@@ -92,13 +66,8 @@
 			</main>
 		</div>
 	</div>
-	<footer id="footer">
-		<div class="content-container"></div>
-	</footer>
-
-	<div id="floating">
-		플로팅 박스
-		<div></div>
-	</div>
+	
+<!-- footer 잘라냄 -->
+<jsp:include page="../../inc/footer.jsp"/>
 </body>
 </html>
