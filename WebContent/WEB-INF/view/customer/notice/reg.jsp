@@ -36,38 +36,26 @@
 				</ol>
 			</div>
 
-			<table class="table table-list">
+			<form method="post"> <!-- 현재 페이지와 같은 url이면 action 생략 가능 -->
+			<table class="table">
 					<tr>
 						<th>제목</th>
-						<td colspan="3">${ notice.title }</td>	<!--3칸 차지해달라 -->
-					</tr>
-					<tr>
-						<th>작성일</th>
-						<td colspan="3">${ notice.regDate }</td>
-					</tr>
-					<tr>
-						<th>작성자</th>
-						<td>${ notice.writerId }</td>
-						<th>조회수</th>
-						<td>${ notice.hit }</td>
+						<td colspan="3"><input name="title"/></td>	<!--3칸 차지해달라 -->
 					</tr>
 					<tr>
 						<th>첨부파일</th>
 						<td colspan="3"></td>
 					</tr>
 					<tr>
-						<td colspan="4">${ notice.content}</td>
+						<td colspan="4"><textarea name="content"></textarea></td>
 					</tr>
 			</table>
 			
 			<div>
-				<a href="notice-list" class="btn btn-default">목록</a>
-				<a href="notice-edit?id=${ notice.id }" class="btn btn-default">수정</a>
-				<a href="notice-del?id=${ notice.id }" class="btn btn-default">삭제</a>
+				<input type="submit" value="등록" class="btn btn-default"/>
+				<a href="notice-list" class="btn btn-default">취소</a>
 			</div>
-			
-			<span class="btn btn-default" href="">글쓰기</span> 
-			<a class="btn btn-img btn-cancel" href="">취소</a> 
+			</form>
 			</main>
 		</div>
 	</div>

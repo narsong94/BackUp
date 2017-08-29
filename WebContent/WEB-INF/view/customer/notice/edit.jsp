@@ -36,10 +36,11 @@
 				</ol>
 			</div>
 
-			<table class="table table-list">
+			<form method="post"> <!-- 현재 페이지와 같은 url이면 action 생략 가능 -->
+			<table border="1">
 					<tr>
 						<th>제목</th>
-						<td colspan="3">${ notice.title }</td>	<!--3칸 차지해달라 -->
+						<td colspan="3"><input name="title" value="${ notice.title }"/></td>	<!--3칸 차지해달라 -->
 					</tr>
 					<tr>
 						<th>작성일</th>
@@ -56,15 +57,16 @@
 						<td colspan="3"></td>
 					</tr>
 					<tr>
-						<td colspan="4">${ notice.content}</td>
+						<td colspan="4"><textarea name="content">${notice.content}</textarea></td>
 					</tr>
 			</table>
 			
 			<div>
-				<a href="notice-list" class="btn btn-default">목록</a>
-				<a href="notice-edit?id=${ notice.id }" class="btn btn-default">수정</a>
-				<a href="notice-del?id=${ notice.id }" class="btn btn-default">삭제</a>
+				<intput type="hidden" name="id" value="${notice.id}"/>
+				<input type="submit" value="저장" class="btn btn-default"/>
+				<a href="notice-detail?id=${ notice.id }" class="btn btn-default">취소</a>
 			</div>
+			</form>
 			
 			<span class="btn btn-default" href="">글쓰기</span> 
 			<a class="btn btn-img btn-cancel" href="">취소</a> 

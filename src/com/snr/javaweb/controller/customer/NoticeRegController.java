@@ -19,47 +19,37 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.snr.javaweb.entity.Notice;
 
-@WebServlet("/customer/notice-list")
-public class NoticeListController extends HttpServlet {
-	protected void service(
+@WebServlet("/customer/notice-reg")
+public class NoticeRegController extends HttpServlet {
+	
+	protected void doGet(
 			HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Notice> list = null;
-		String _title = request.getParameter("title");
-
-		String title = "";
-
-		if(_title != null && !_title.equals(""))
-			title = _title;
+		request.getRequestDispatcher("/WEB-INF/view/customer/notice/reg.jsp").forward(request, response);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 
 		String url = "jdbc:mysql://211.238.142.247/newlecture?autoReconnect=true&amp;useSSL=false&characterEncoding=UTF-8";
-		String sql = "SELECT * FROM Notice WHERE title like ?";
+		String sql = "INSERT INTO Notice(title, content) VALUES(?, ?)";
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, "sist", "cclass");
 			// Statement st = conn.createStatement();
 			PreparedStatement st = conn.prepareStatement(sql);
-			st.setString(1, "%" + title + "%");
-			ResultSet rs = st.executeQuery();
-
-			list = new ArrayList<>();
-
-			while (rs.next()) {
-				Notice n = new Notice();
-
-				n.setId(rs.getString("ID"));
-				n.setTitle(rs.getString("TITLE"));
-				n.setContent(rs.getString("CONTENT"));
-				n.setRegDate(rs.getDate("REGDATE"));
-				n.setHit(rs.getInt("HIT"));
-				n.setWriterId(rs.getString("WRITERID"));
-
-				list.add(n);
-			}
-
-			rs.close();
+			st.setString(1, title);
+			st.setString(2, content);
+			
+			int result = st.executeUpdate();
+			
 			st.close();
 			conn.close();
 
@@ -68,15 +58,7 @@ public class NoticeListController extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		request.setAttribute("list", list);
-
-		/*application.setAttribute("x", "어");
-		session.setAttribute("x", "세");
-		request.setAttribute("x", "리");
-		//pageContext.setAttribute("x", "페");
-*/
 		
-		request.getRequestDispatcher("/WEB-INF/view/customer/notice/list.jsp").forward(request, response);
+		response.sendRedirect("notice-list");
 	}
 }

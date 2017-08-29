@@ -19,17 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.snr.javaweb.entity.Notice;
 
-@WebServlet("/customer/notice-detail")
-public class NoticeDetailController extends HttpServlet {
-	protected void service(
+@WebServlet("/customer/notice-edit")
+public class NoticeEditController extends HttpServlet {
+	protected void doGet(
 			HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String _id = request.getParameter("id");
-		String id = "";
-		
-		if(_id != null && !_id.equals(""))
-			id = _id;
+		String id = request.getParameter("id");
 		
 		Notice n = null;
 
@@ -67,6 +63,41 @@ public class NoticeDetailController extends HttpServlet {
 		
 		request.setAttribute("notice", n);
 		
-		request.getRequestDispatcher("/WEB-INF/view/customer/notice/detail.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/customer/notice/edit.jsp").forward(request, response);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		String id = request.getParameter("id");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+
+		String url = "jdbc:mysql://211.238.142.247/newlecture?autoReconnect=true&amp;useSSL=false&characterEncoding=UTF-8";
+		String sql = "UPDATE Notice SET title=?, content=? WHERE id LIKE ?";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, "sist", "cclass");
+			// Statement st = conn.createStatement();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, title);
+			st.setString(2, content);
+			st.setString(3, id);
+			
+			int result = st.executeUpdate();
+			
+			st.close();
+			conn.close();
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		response.sendRedirect("notice-detail?id="+id);
 	}
 }
