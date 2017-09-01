@@ -6,77 +6,48 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.snr.javaweb.dao.NoticeDao;
+import com.snr.javaweb.dao.jdbc.JdbcNoticeDao;
 import com.snr.javaweb.entity.Notice;
 
 @WebServlet("/customer/notice-list")
-public class NoticeListController extends HttpServlet {
-	protected void service(
-			HttpServletRequest request, 
-			HttpServletResponse response) throws ServletException, IOException {
-		
-		List<Notice> list = null;
+public class NoticeListController extends HttpServlet{
+	@Override
+
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String _title = request.getParameter("title");
+		String _page = request.getParameter("p");
 
-		String title = "";
+		int page = 1; // 전달이 안됐을 때 기본값
+		String query = ""; // 기본값
 
-		if(_title != null && !_title.equals(""))
-			title = _title;
-
-		String url = "jdbc:mysql://211.238.142.247/newlecture?autoReconnect=true&amp;useSSL=false&characterEncoding=UTF-8";
-		String sql = "SELECT * FROM Notice WHERE title like ?";
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url, "sist", "cclass");
-			// Statement st = conn.createStatement();
-			PreparedStatement st = conn.prepareStatement(sql);
-			st.setString(1, "%" + title + "%");
-			ResultSet rs = st.executeQuery();
-
-			list = new ArrayList<>();
-
-			while (rs.next()) {
-				Notice n = new Notice();
-
-				n.setId(rs.getString("ID"));
-				n.setTitle(rs.getString("TITLE"));
-				n.setContent(rs.getString("CONTENT"));
-				n.setRegDate(rs.getDate("REGDATE"));
-				n.setHit(rs.getInt("HIT"));
-				n.setWriterId(rs.getString("WRITERID"));
-
-				list.add(n);
-			}
-
-			rs.close();
-			st.close();
-			conn.close();
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		request.setAttribute("list", list);
-
-		/*application.setAttribute("x", "어");
-		session.setAttribute("x", "세");
-		request.setAttribute("x", "리");
-		//pageContext.setAttribute("x", "페");
-*/
+		if (_page != null && !_page.equals(""))
+			page = Integer.parseInt(_page);
 		
-		request.getRequestDispatcher("/WEB-INF/view/customer/notice/list.jsp").forward(request, response);
+		if (_title != null && !_title.equals(""))
+			query = _title;
+
+		/*<dao 부분 - db 관련 코드>*/
+		NoticeDao noticeDao = new JdbcNoticeDao();
+		
+		request.setAttribute("list", noticeDao.getList(page, query));
+		request.setAttribute("count", noticeDao.getCount());
+		/* db 바꼈을 때 dao에서만 바꾸면 되는 편리함 가짐 */
+		
+		// response.sendRedirect("notice.jsp"); //아예 새로 출발
+		request.getRequestDispatcher("/WEB-INF/view/customer/notice/list.jsp").forward(request, response); // 이어서 출발
 	}
+
 }

@@ -1,73 +1,107 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../css/reset.css" type="text/css" rel="stylesheet" />
-<link href="../css/style.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
+   <!-- 헤더부분 -->
+   <jsp:include page="../../inc/header.jsp"/> <!-- 개쩐다 이게바로 집중화구나 -->
+   
+   <div id = "visual">
+      <div class = "content-container">
+      </div>
+   </div>
+   
+   <div id = "body" class="clearfix">
+      <div class="content-container clearfix">
+   
+         
+   <jsp:include page="../inc/aside.jsp"/> <!-- 어사이드 -->
+   
+         <main id ="main">   
+             <h2 class="main title">공지사항</h2>
+            <div>
+               <h3>경로</h3>
+               <ol>
+                  <li><a href="">home</a></li>
+                  <li><a href="">고객센터</a></li>
+                  <li><a href="">공지사항</a></li>
+               </ol>
+            </div>
+         
+            <div>
+                 <h3>공지사항 검색 폼</h3>
+               <form action="notice-list" method="get">
+                  <label>검색어</label>
+                  <input type="text" name="query" />
+                  <input type="submit" />
+               </form>
+            </div>
+            
+            <table class="table table-list">
+               <tr>
+                  <th class="w60">번호</th>
+                  <th >제목</th>
+                  <th class="w100">작성자</th>
+                  <th class="w100">작성일</th>
+                  <th class="w60">조회수</th>
+               </tr>      
+               <c:forEach var="n"  items="${list}">
+                  <tr>
+                     <td>${n.id}</td>
+                     <td class="title text-left text-indent"><a href="notice-detail?id=${n.id}">${n.title}[${n.countCmt}]</a></td>
+                     <td>${n.writerId}</td>
+                     <td>${n.regDate}</td>
+                     <td>${n.hit}</td>         
+                  </tr>
+               </c:forEach>
+            </table>
+            <c:set var="page" value="${param.p}"/>
+            <c:set var="startPage" value="${page-(page-1)%5 }"/>
+            <c:set var="lastPage" value="${fn:substringBefore((count%10 ==0 ? count / 10 : count/10+1),'.')}"/>
+            <div class ="">
+               <c:if test="${startPage+i>5}">
+               <div><a href="?p=${startPage-5}">이전</a></div>
+               </c:if>
+               <ul>
+                  <c:forEach var="i" begin="0" end="4">
+                     <c:set var="strong" value="" />
+                     <c:if test="${page==startPage+i}">
+                        <c:set var="strong" value="text-strong"/>
+                     </c:if>
+                     <c:if test="${startPage+i <= lastPage}">
+                        <li><a class="${strong}" href="?p=${startPage+i}">${startPage+i}</a></li>
+                     </c:if>
+                     
+                     <c:if test="${startPage+i > lastPage}">
+                        <li>${startPage+i}</li>
+                     </c:if>
+                  </c:forEach>
+               </ul>
+               <div>
+                  <c:if test="${lastPage>=startPage+5}">
+                  <a href="?p=${startPage+5}">다음</a>
+                  </c:if>
+               </div>
+            </div>
 
-<!-- 헤더부분 잘라냄  -->
-<jsp:include page="../../inc/header.jsp"/>
+            <a class="btn btn-default" href="notice-reg">글쓰기</a>
+            <a class="btn-img btn-cancel" href ="">취소</a>
+         </div> 
+         </main>
+         
+      </div>
+      
+      <jsp:include page="../../inc/footer.jsp"/>
+      <!-- 푸터부분 -->
 
-<!-- visual 잘라냄  -->
-<jsp:include page="../inc/visual.jsp"/>
-
-	<div id="body" class="clearfix">
-		<div class="content-container">
-
-			<!-- aside 잘라냄 -->
-			<jsp:include page="../inc/aside.jsp"/>
-
-			<main id="main">
-			<h2>공지사항</h2>
-
-			<div>
-				<h3 class="hidden">경로</h3>
-				<ol>
-					<li>home</li>
-					<li>고객센터</li>
-					<li>공지사항</li>
-				</ol>
-			</div>
-
-			<div>
-				<h3>공지사항 검색 폼</h3>
-				<form action="notice-list" method="get">
-					<label>검색어</label> <input type="text" name="title" /> <input
-						type="submit" />
-				</form>
-			</div>
-			<table class="table table-list">
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th>조회수</th>
-				</tr>
-				<c:forEach var="n" items="${list}">
-					<tr>
-						<td>${ n.id }</td>
-						<td><a href="notice-detail?id=${ n.id }">${ n.title }</a></td>
-						<td>newlec</td>
-						<td>${ n.regDate }</td>
-						<td>${ n.hit }</td>
-					</tr>
-				</c:forEach>
-			</table>
-			<a class="btn btn-default" href="notice-reg">글쓰기</a> 
-			<a class="btn btn-img btn-cancel" href="">취소</a> 
-			</main>
-		</div>
-	</div>
-	
-<!-- footer 잘라냄 -->
-<jsp:include page="../../inc/footer.jsp"/>
 </body>
 </html>

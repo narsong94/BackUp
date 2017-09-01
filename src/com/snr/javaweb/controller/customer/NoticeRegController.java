@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.snr.javaweb.dao.NoticeDao;
+import com.snr.javaweb.dao.jdbc.JdbcNoticeDao;
 import com.snr.javaweb.entity.Notice;
 
 @WebServlet("/customer/notice-reg")
@@ -36,29 +38,10 @@ public class NoticeRegController extends HttpServlet {
 		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-
-		String url = "jdbc:mysql://211.238.142.247/newlecture?autoReconnect=true&amp;useSSL=false&characterEncoding=UTF-8";
-		String sql = "INSERT INTO Notice(title, content) VALUES(?, ?)";
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url, "sist", "cclass");
-			// Statement st = conn.createStatement();
-			PreparedStatement st = conn.prepareStatement(sql);
-			st.setString(1, title);
-			st.setString(2, content);
-			
-			int result = st.executeUpdate();
-			
-			st.close();
-			conn.close();
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		
+		NoticeDao dao = new JdbcNoticeDao();
+		dao.insert(title, content);
+
 		response.sendRedirect("notice-list");
 	}
 }

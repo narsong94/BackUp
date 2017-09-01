@@ -37,10 +37,10 @@
 			</div>
 
 			<form method="post"> <!-- 현재 페이지와 같은 url이면 action 생략 가능 -->
-			<table border="1">
+			<table class="table">
 					<tr>
 						<th>제목</th>
-						<td colspan="3"><input name="title" value="${ notice.title }"/></td>	<!--3칸 차지해달라 -->
+						<td colspan="3" class="text-left"><input name="title" value="${ notice.title }"/></td>	<!--3칸 차지해달라 -->
 					</tr>
 					<tr>
 						<th>작성일</th>

@@ -37,7 +37,7 @@
 					</ul>
 				</nav>
 
-				<nav id="custom-menu" class="hr-list">
+				<nav id="custom-menu" class="hr-list customer-menu">
 					<h1 class="hidden">고객메뉴</h1>
 					<ul>
 						<li><a href="${path}/customer/notice-list"><img src="${path}/images/txt-mypage.png"
