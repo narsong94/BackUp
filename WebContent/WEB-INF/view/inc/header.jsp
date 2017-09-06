@@ -33,16 +33,16 @@
 					<ul>
 						<li><a href="">HOME</a></li>
 						<li><a href="">로그인</a></li>
-						<li><a href="">회원가입</a></li>
+						<li><a href="${path}/member/agree">회원가입</a></li>
 					</ul>
 				</nav>
 
 				<nav id="custom-menu" class="hr-list customer-menu">
 					<h1 class="hidden">고객메뉴</h1>
 					<ul>
-						<li><a href="${path}/customer/notice-list"><img src="${path}/images/txt-mypage.png"
+						<li><a href="${path}/customer/notice/list"><img src="${path}/images/txt-mypage.png"
 								alt="마이페이지" /></a></li>
-						<li><a href="${path}/customer/notice-list"><img src="${path}/images/txt-customer.png"
+						<li><a href="${path}/customer/notice/list"><img src="${path}/images/txt-customer.png"
 								alt="고객센터" /></a></li>
 					</ul>
 				</nav>
