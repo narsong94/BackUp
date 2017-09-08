@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.snr.javaweb.dao.MemberDao;
+import com.snr.javaweb.dao.MemberRoleDao;
 import com.snr.javaweb.entity.Member;
 import com.snr.javaweb.entity.NoticeView;
 
@@ -101,6 +102,6 @@ public class JdbcMemberDao implements MemberDao {
       
       return result;
    }
-   
+
 
 }

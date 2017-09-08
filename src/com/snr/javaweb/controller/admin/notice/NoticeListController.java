@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.snr.javaweb.dao.MemberRoleDao;
 import com.snr.javaweb.dao.NoticeDao;
+import com.snr.javaweb.dao.jdbc.JdbcMemberRoleDao;
 import com.snr.javaweb.dao.jdbc.JdbcNoticeDao;
 import com.snr.javaweb.entity.Notice;
 
@@ -27,27 +29,36 @@ public class NoticeListController extends HttpServlet{
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		
+		// ì¸ì¦í•œ ì ì´ ìˆëŠ”ì§€ ì—†ë‹¤ë©´ ë¡œê·¸ì¸ í•˜ê³ ì™€
+		
+		
+		// ì™”ë‹ˆ? ì™”ë‹¤ë©´ ì¸ì •ì •ë³´ ì¤˜ ê·¸ê±¸ë¡œ ì—­í• ì´ adminì¸ì§€ í™•ì¸í•˜ì
+		/*
+		String id = request.getParameter("p");
+		MemberRoleDao memberRoleDao = new JdbcMemberRoleDao();
+		boolean roleHas = memberRoleDao.hasRole(id, "ROLE_ADMIN");*/
+		
+		// ì—†ë‹¤ë©´ ì—ëŸ¬-ê¶Œí•œ ì—†ìŒ  í˜ì´ì§€ë¡œ ë„˜ì–´ê°
+		
+		
 		String _title = request.getParameter("title");
 		String _page = request.getParameter("p");
 
-		int page = 1; // Àü´ŞÀÌ ¾ÈµÆÀ» ¶§ ±âº»°ª
-		String query = ""; // ±âº»°ª
-
+		int page = 1; 
+		String query = "";
 		if (_page != null && !_page.equals(""))
 			page = Integer.parseInt(_page);
 		
 		if (_title != null && !_title.equals(""))
 			query = _title;
 
-		/*<dao ºÎºĞ - db °ü·Ã ÄÚµå>*/
 		NoticeDao noticeDao = new JdbcNoticeDao();
 		
 		request.setAttribute("list", noticeDao.getList(page, query));
 		request.setAttribute("count", noticeDao.getCount());
-		/* db ¹Ù²¼À» ¶§ dao¿¡¼­¸¸ ¹Ù²Ù¸é µÇ´Â Æí¸®ÇÔ °¡Áü */
 		
-		// response.sendRedirect("notice.jsp"); //¾Æ¿¹ »õ·Î Ãâ¹ß
-		request.getRequestDispatcher("/WEB-INF/view/admin/notice/list.jsp").forward(request, response); // ÀÌ¾î¼­ Ãâ¹ß
+		request.getRequestDispatcher("/WEB-INF/view/admin/notice/list.jsp").forward(request, response); // ï¿½Ì¾î¼­ ï¿½ï¿½ï¿½
 	}
 
 }
