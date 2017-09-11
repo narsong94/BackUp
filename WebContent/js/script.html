@@ -6,9 +6,9 @@
 </head>
 <body>
 	<script type="text/javascript">
-/* 	 string var s= ""
-	 array var ar = []
-	 object var ob ={}  */
+		/* 	 string var s= ""
+		 array var ar = []
+		 object var ob ={}  */
 		/* 
 		 var x = new Object();
 		 x.name = new String("newlec");
@@ -78,27 +78,27 @@
 		 }
 		 */
 
-/* 		function f1() {
-			var a = 1;
-			return function f2() {	// 클로저, but a가 전역이면 클로저 아님
-				return a
-			}
-		}
-		 
+		/* 		function f1() {
+		 var a = 1;
+		 return function f2() {	// 클로저, but a가 전역이면 클로저 아님
+		 return a
+		 }
+		 }
+		
 		 var f = f1();
 		 var a = f();
 		 alert(a); 
-*/
-/* 
-var x, y;
-x = prompt("x 값을 입력하세요", 0);
-y = prompt("y 값을 입력하세요", 0);
-x=parseInt(x);
-y=parseInt(y);
-; */
+		 */
+		/* 
+		 var x, y;
+		 x = prompt("x 값을 입력하세요", 0);
+		 y = prompt("y 값을 입력하세요", 0);
+		 x=parseInt(x);
+		 y=parseInt(y);
+		 ; */
 	</script>
 
-<script>
+	<!-- <script>
 	function printResult(){
 		var x, y;
 		x = prompt("x 값을 입력하세요");
@@ -109,7 +109,76 @@ y=parseInt(y);
 		btnPrint.value=x+y;
 	}
 </script>
-<input type="button" value="출력" onclick="printResult();" id="btnPrint"/>
+<input type="button" value="출력" onclick="printResult();" id="btnPrint"/> -->
+	<script type="text/javascript">
+		function calcApp() {
+			var xText = document.getElementById("x");
+			var yText = document.getElementById("y");
+			var addButton = document.getElementById("add-button");
+			var resultText = document.getElementById("result");
 
+			addButton.onclick = addBtnClick;
+
+			function addBtnClick() {
+				var x = parseInt(xText.value);
+				var y = parseInt(yText.value);
+				resultText.value = x + y;
+			}
+		}
+		window.onload = calcApp;
+
+		//--------초 세기--------------------------------
+
+		window.onload = function() {
+			var countButton = document.getElementById("count-button");
+			var countLabel = document.getElementById("count-label");
+			var timerId = null;
+
+			var ex1 = document.getElementById("ex1");
+			ex1.style.marginTop = "0px";
+
+			countButton.onclick = function cntBtnClick() {
+
+				if (timerId == null)
+					setInterval(function() {
+						var count = parseInt(countLabel.textContent);
+						var marginTop = parseInt(ex1.style.marginTop);
+
+						if (count <= 0) {
+							clearInterval(timerId);
+							timerId = null;
+						}
+						
+						if (marginTop >= 100) {
+							clearInterval(timerId);
+							timerId = null;
+						}
+						
+						ex1.style.marginTop = (marginTop + 1) + "px";
+
+						//countLabel.textContent = count - 1; // 속성이 아닌 자식이 text인 경우 그것을 사용하고 싶을 때 textContent
+					}, 30); // setTimeout은 한번만, setInterval은 계속
+			}
+		}
+	</script>
+
+	<!-- 더하기 html -->
+
+	<div id="ex1">
+		<input type="text" id="x" placeholder="x값을 입력하세요" /> <input
+			type="text" id="y" placeholder="y값을 입력하세요" /> <input type="button"
+			value="더하기" id="add-button" /> <input type="text" value=""
+			id="result" />
+	</div>
+	<p>
+	<hr />
+	<!-- 초 세기 html -->
+
+	<p>
+		남은시간 <span id="count-label">60</span>초 <input id="count-button"
+			type="button" value="카운트 시작" />
+	</p>
 </body>
+
+
 </html>

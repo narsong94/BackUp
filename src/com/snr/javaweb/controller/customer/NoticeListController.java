@@ -20,7 +20,7 @@ import com.snr.javaweb.dao.NoticeDao;
 import com.snr.javaweb.dao.jdbc.JdbcNoticeDao;
 import com.snr.javaweb.entity.Notice;
 
-@WebServlet("/customer/notice-list")
+@WebServlet("/customer/notice/list")
 public class NoticeListController extends HttpServlet{
 	@Override
 

@@ -39,7 +39,7 @@
          
             <div>
                  <h3>공지사항 검색 폼</h3>
-               <form action="notice-list" method="get">
+               <form action="list" method="get">
                   <label>검색어</label>
                   <input type="text" name="query" />
                   <input type="submit" />

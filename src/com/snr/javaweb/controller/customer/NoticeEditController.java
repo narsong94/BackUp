@@ -21,7 +21,7 @@ import com.snr.javaweb.dao.NoticeDao;
 import com.snr.javaweb.dao.jdbc.JdbcNoticeDao;
 import com.snr.javaweb.entity.Notice;
 
-@WebServlet("/customer/notice-edit")
+@WebServlet("/customer/notice/edit")
 public class NoticeEditController extends HttpServlet {
 	protected void doGet(
 			HttpServletRequest request, 
@@ -49,6 +49,6 @@ public class NoticeEditController extends HttpServlet {
 		
 		noticeDao.update(id, title, content);
 		
-		response.sendRedirect("notice-detail?id="+id);
+		response.sendRedirect("detail?id="+id);
 	}
 }

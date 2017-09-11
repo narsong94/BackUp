@@ -53,7 +53,7 @@
 			
 			<div>
 				<input type="submit" value="등록" class="btn btn-default"/>
-				<a href="notice-list" class="btn btn-default">취소</a>
+				<a href="list" class="btn btn-default">취소</a>
 			</div>
 			</form>
 			</main>

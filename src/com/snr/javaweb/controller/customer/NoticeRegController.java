@@ -21,7 +21,7 @@ import com.snr.javaweb.dao.NoticeDao;
 import com.snr.javaweb.dao.jdbc.JdbcNoticeDao;
 import com.snr.javaweb.entity.Notice;
 
-@WebServlet("/customer/notice-reg")
+@WebServlet("/customer/notice/reg")
 public class NoticeRegController extends HttpServlet {
 	
 	protected void doGet(
@@ -42,6 +42,6 @@ public class NoticeRegController extends HttpServlet {
 		NoticeDao dao = new JdbcNoticeDao();
 		dao.insert(title, content);
 
-		response.sendRedirect("notice-list");
+		response.sendRedirect("list");
 	}
 }

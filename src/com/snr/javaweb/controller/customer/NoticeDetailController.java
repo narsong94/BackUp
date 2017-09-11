@@ -21,7 +21,7 @@ import com.snr.javaweb.dao.NoticeDao;
 import com.snr.javaweb.dao.jdbc.JdbcNoticeDao;
 import com.snr.javaweb.entity.Notice;
 
-@WebServlet("/customer/notice-detail")
+@WebServlet("/customer/notice/detail")
 public class NoticeDetailController extends HttpServlet {
 	protected void service(
 			HttpServletRequest request, 
